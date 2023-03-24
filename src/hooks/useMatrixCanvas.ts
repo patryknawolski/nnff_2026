@@ -5,12 +5,12 @@ export const useMatrixCanvas = ({ canvasId }: { canvasId: string }) => {
   const { width: canvasWidth, height: canvasHeight } = useWindowSize();
 
   useEffect(() => {
-    // Initialising the canvas
-    const canvas = document.getElementById(
-      canvasId
-    ) as HTMLCanvasElement | null;
+    // let drawIntervalId: string | undefined = undefined;
 
-    if (!canvas) return;
+    if (!canvasWidth || !canvasHeight) return;
+
+    // Initialising the canvas
+    const canvas = document.getElementById(canvasId) as HTMLCanvasElement;
 
     const ctx = canvas.getContext("2d");
     // Setting the width and height of the canvas
@@ -32,8 +32,9 @@ export const useMatrixCanvas = ({ canvasId }: { canvasId: string }) => {
     // Setting up the draw function
     function draw() {
       if (!ctx) return;
+      ctx.clearRect(0, 0, canvasWidth ?? 0, canvasHeight ?? 0);
       if (!canvas) return;
-      ctx.fillStyle = "rgba(0, 0, 0, .1)";
+      ctx.fillStyle = "transparent";
       ctx.fillRect(
         0,
         0,
@@ -50,7 +51,19 @@ export const useMatrixCanvas = ({ canvasId }: { canvasId: string }) => {
         }
       }
     }
+
     // Loop the animation
-    setInterval(draw, 33);
-  }, []);
+    let drawIntervalId = setInterval(() => {
+      draw();
+    }, 33);
+
+    return () => {
+      clearInterval(drawIntervalId);
+    };
+  }, [canvasHeight, canvasWidth]);
+
+  return {
+    canvasWidth,
+    canvasHeight,
+  };
 };

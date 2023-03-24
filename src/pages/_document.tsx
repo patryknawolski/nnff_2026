@@ -1,4 +1,3 @@
-import { useWindowSize } from "@/hooks/useWindowSize";
 import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
