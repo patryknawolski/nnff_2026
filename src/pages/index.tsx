@@ -1,31 +1,54 @@
 import Head from "next/head";
 import { W98Window } from "@/components/window";
 import Delayed from "@/components/Delayed";
-import { ReactNode } from "react";
+import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { useState } from "react";
 
 export default function Home() {
   const windowsQuantity = 12;
   const windowsShowMsDelay = new Array(windowsQuantity)
     .fill(null)
     .map((value, index) => index * 100);
-  const windowsSpacingEmValues = new Array(windowsQuantity)
+  const windowsInitialSpacingPxValues = new Array(windowsQuantity)
     .fill(null)
-    .map((value, index) => index);
-  const windowsComponents = new Array(windowsQuantity)
-    .fill(null)
-    .map((value, index) => {
-      const waitBeforeShow = windowsShowMsDelay[index];
-      const spacingEmValue = `${windowsSpacingEmValues[index]}em`;
+    .map((value, index) => index * 16);
+  const [windows, setWindows] = useState(
+    new Array(windowsQuantity).fill(null).map((value, index) => ({
+      id: `window-${index}`,
+      top: windowsInitialSpacingPxValues[index],
+      left: windowsInitialSpacingPxValues[index],
+    }))
+  );
 
-      return (
-        <Delayed waitBeforeShow={waitBeforeShow}>
-          <W98Window
-            key={index}
-            style={{ marginTop: spacingEmValue, marginRight: spacingEmValue }}
-          />
-        </Delayed>
-      );
-    });
+  const windowsComponents = windows.map((value, index) => {
+    const waitBeforeShow = windowsShowMsDelay[index];
+
+    return (
+      <Delayed waitBeforeShow={waitBeforeShow}>
+        <W98Window
+          id={`window-${index}`}
+          key={index}
+          style={{ marginTop: windows[index].top, left: windows[index].left }}
+        />
+      </Delayed>
+    );
+  });
+
+  function handleDragEnd(ev: DragEndEvent) {
+    // What to do here??
+    // It's not a sortable, it's a free drag and drop
+    const window = windows.find((x) => x.id === ev.active.id);
+    if (window) {
+      console.log("window", window);
+      window.left += ev.delta.x;
+      window.top += ev.delta.y;
+      const _windows = windows.map((x) => {
+        if (x.id === window.id) return window;
+        return x;
+      });
+      setWindows(_windows);
+    }
+  }
 
   return (
     <>
@@ -35,7 +58,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      {windowsComponents}
+      <DndContext onDragEnd={handleDragEnd}>{windowsComponents}</DndContext>
     </>
   );
 }

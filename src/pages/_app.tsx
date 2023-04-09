@@ -13,15 +13,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <main>
       <Component {...pageProps} />
-      {/* {typeof window !== "undefined" ? ( */}
       <canvas
         id="matrix-canvas"
         className={matrixCanvasStyles.canvas}
-        // style={matrixCanvasStyles.canvas}
         width={canvasWidth}
         height={canvasHeight}
       ></canvas>
-      {/* ) : null} */}
     </main>
   );
 }
