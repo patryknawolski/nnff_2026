@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { W98Window } from "@/components/window";
+import { W98Window } from "@/components/W98Window";
 import Delayed from "@/components/Delayed";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useState } from "react";
@@ -39,7 +39,6 @@ export default function Home() {
     // It's not a sortable, it's a free drag and drop
     const window = windows.find((x) => x.id === ev.active.id);
     if (window) {
-      console.log("window", window);
       window.left += ev.delta.x;
       window.top += ev.delta.y;
       const _windows = windows.map((x) => {
