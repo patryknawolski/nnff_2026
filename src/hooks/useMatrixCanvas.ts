@@ -60,7 +60,7 @@ export const useMatrixCanvas = ({ canvasId }: { canvasId: string }) => {
     return () => {
       clearInterval(drawIntervalId);
     };
-  }, [canvasHeight, canvasWidth]);
+  }, [canvasId, canvasHeight, canvasWidth]);
 
   return {
     canvasWidth,

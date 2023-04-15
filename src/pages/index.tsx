@@ -33,22 +33,25 @@ export default function Home() {
     );
   });
 
-  const handleDragEnd = useCallback((ev: DragEndEvent) => {
-    // What to do here??
-    // It's not a sortable, it's a free drag and drop
-    const window = windows.find((x) => x.id === ev.active.id);
+  const handleDragEnd = useCallback(
+    (ev: DragEndEvent) => {
+      // What to do here??
+      // It's not a sortable, it's a free drag and drop
+      const window = windows.find((x) => x.id === ev.active.id);
 
-    if (window) {
-      window.left += ev.delta.x;
-      window.top += ev.delta.y;
-      const _windows = windows.map((x) => {
-        if (x.id === window.id) return window;
-        return x;
-      });
+      if (window) {
+        window.left += ev.delta.x;
+        window.top += ev.delta.y;
+        const _windows = windows.map((x) => {
+          if (x.id === window.id) return window;
+          return x;
+        });
 
-      setWindows(_windows);
-    }
-  }, []);
+        setWindows(_windows);
+      }
+    },
+    [windows]
+  );
 
   return (
     <>
