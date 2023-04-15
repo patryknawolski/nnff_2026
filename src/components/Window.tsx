@@ -1,15 +1,9 @@
 import { CSSProperties } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import styles from "@/components/W98Window.module.css";
+import styles from "@/components/Window.module.css";
 
-export const W98Window = ({
-  id,
-  style,
-}: {
-  id: string;
-  style: CSSProperties;
-}) => {
+export const Window = ({ id, style }: { id: string; style: CSSProperties }) => {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id,
   });

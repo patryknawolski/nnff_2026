@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { W98Window } from "@/components/W98Window";
+import { Window } from "@/components/Window";
 import Delayed from "@/components/Delayed";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { useCallback, useState } from "react";
@@ -25,7 +25,7 @@ export default function Home() {
 
     return (
       <Delayed key={`window-${index}`} waitBeforeShow={waitBeforeShow}>
-        <W98Window
+        <Window
           id={`window-${index}`}
           style={{ marginTop: windows[index].top, left: windows[index].left }}
         />
