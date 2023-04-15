@@ -1,3 +1,6 @@
+@import "98.css";
+@import "@/styles/98-overwrites.css";
+
 :root {
   --max-width: 1100px;
   --border-radius: 12px;
@@ -7,6 +10,8 @@
 
   --background-start-rgb: 255, 0, 188;
   --background-end-rgb: 67, 0, 255;
+
+  --w98-surface: #c0c0c0;
 }
 
 * {
@@ -19,13 +24,14 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-size: 16px;
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
   color: rgb(var(--foreground-rgb));
-  background: url("./home-background-glitches.png") no-repeat top left / cover,
-    linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
+  background: url("./layout-background-glitches.png") no-repeat top left / cover,
+    linear-gradient(to top, transparent, rgb(var(--background-end-rgb)))
       rgb(var(--background-start-rgb));
   overflow: auto;
 }

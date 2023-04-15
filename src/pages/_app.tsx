@@ -1,8 +1,6 @@
 import { useMatrixCanvas } from "@/hooks/useMatrixCanvas";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import "98.css";
-import "@/styles/98-overwrites.css";
 import matrixCanvasStyles from "@/styles/matrix-canvas.module.css";
 
 export default function App({ Component, pageProps }: AppProps) {

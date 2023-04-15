@@ -1,7 +1,9 @@
 import { Window } from "@/components/Window";
 import Delayed from "@/components/Delayed";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { restrictToParentElement } from "@dnd-kit/modifiers";
 import { useCallback, useState } from "react";
+import styles from "@/components/WindowsHeader.module.css";
 
 export const WindowsHeader: React.FC = () => {
   const windowsQuantity = 12;
@@ -10,7 +12,7 @@ export const WindowsHeader: React.FC = () => {
     .map((_value, index) => index * 100);
   const windowsInitialSpacingPxValues = new Array(windowsQuantity)
     .fill(null)
-    .map((_value, index) => index * 16);
+    .map((_value, index) => (index + 1) * 16 + 8);
   const [windows, setWindows] = useState(
     new Array(windowsQuantity).fill(null).map((value, index) => ({
       id: `window-${index}`,
@@ -52,5 +54,14 @@ export const WindowsHeader: React.FC = () => {
     [windows]
   );
 
-  return <DndContext onDragEnd={handleDragEnd}>{windowsComponents}</DndContext>;
+  return (
+    <div className={styles.windowsHeader}>
+      <DndContext
+        onDragEnd={handleDragEnd}
+        modifiers={[restrictToParentElement]}
+      >
+        {windowsComponents}
+      </DndContext>
+    </div>
+  );
 };

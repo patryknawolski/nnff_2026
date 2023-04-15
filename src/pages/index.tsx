@@ -1,7 +1,10 @@
 import { WindowsHeader } from "@/components/WindowsHeader";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import Head from "next/head";
 
 export default function Home() {
+  const { width } = useWindowSize();
+
   return (
     <>
       <Head>
@@ -10,7 +13,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <WindowsHeader />
+      {width && width > 1199 ? <WindowsHeader /> : null}
     </>
   );
 }
