@@ -2,16 +2,16 @@ import Head from "next/head";
 import { W98Window } from "@/components/W98Window";
 import Delayed from "@/components/Delayed";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function Home() {
   const windowsQuantity = 12;
   const windowsShowMsDelay = new Array(windowsQuantity)
     .fill(null)
-    .map((value, index) => index * 100);
+    .map((_value, index) => index * 100);
   const windowsInitialSpacingPxValues = new Array(windowsQuantity)
     .fill(null)
-    .map((value, index) => index * 16);
+    .map((_value, index) => index * 16);
   const [windows, setWindows] = useState(
     new Array(windowsQuantity).fill(null).map((value, index) => ({
       id: `window-${index}`,
@@ -20,24 +20,24 @@ export default function Home() {
     }))
   );
 
-  const windowsComponents = windows.map((value, index) => {
+  const windowsComponents = windows.map((_value, index) => {
     const waitBeforeShow = windowsShowMsDelay[index];
 
     return (
-      <Delayed waitBeforeShow={waitBeforeShow}>
+      <Delayed key={`window-${index}`} waitBeforeShow={waitBeforeShow}>
         <W98Window
           id={`window-${index}`}
-          key={index}
           style={{ marginTop: windows[index].top, left: windows[index].left }}
         />
       </Delayed>
     );
   });
 
-  function handleDragEnd(ev: DragEndEvent) {
+  const handleDragEnd = useCallback((ev: DragEndEvent) => {
     // What to do here??
     // It's not a sortable, it's a free drag and drop
     const window = windows.find((x) => x.id === ev.active.id);
+
     if (window) {
       window.left += ev.delta.x;
       window.top += ev.delta.y;
@@ -45,9 +45,10 @@ export default function Home() {
         if (x.id === window.id) return window;
         return x;
       });
+
       setWindows(_windows);
     }
-  }
+  }, []);
 
   return (
     <>
