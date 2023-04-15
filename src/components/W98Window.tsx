@@ -1,7 +1,7 @@
 import { CSSProperties } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
-import styles from "./W98Window.module.css";
+import styles from "@/components/W98Window.module.css";
 
 export const W98Window = ({
   id,
